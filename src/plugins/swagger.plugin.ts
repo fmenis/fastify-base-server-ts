@@ -29,9 +29,9 @@ async function swagger(fastify: FastifyInstance): Promise<void> {
           description: "Local server",
         },
       ],
-      tags: [
-        { name: "articles", description: "Articles related end-points" },
-      ].sort((a, b) => a.name.localeCompare(b.name)),
+      tags: [{ name: "trips", description: "Trips related end-points" }].sort(
+        (a, b) => a.name.localeCompare(b.name)
+      ),
     },
   });
 

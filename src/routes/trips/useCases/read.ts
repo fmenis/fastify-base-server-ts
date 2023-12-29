@@ -6,18 +6,18 @@ import {
 } from "fastify";
 
 import {
-  ListArticleParamsType,
-  articlesResponse,
-  listArticleParams,
-} from "../article.schema";
+  ListTripsParamsType,
+  tripsResponse,
+  listTripsParams,
+} from "../trip.schema";
 import { buildRouteFullDescription } from "../../../common/utils";
-import { IArticle } from "../article.interfaces";
+import { ITrip } from "../trip.interfaces";
 
-export default async function readArticle(
+export default async function readTrip(
   fastify: FastifyInstance,
   opts: RegisterOptions
 ) {
-  const { articleService, commonClientErrors } = fastify;
+  const { tripService, commonClientErrors } = fastify;
 
   fastify.route({
     url: "/:id",
@@ -25,28 +25,28 @@ export default async function readArticle(
     schema: {
       description: buildRouteFullDescription({
         api: "read",
-        description: "Read article.",
+        description: "Read trip.",
         errors: commonClientErrors.errors,
       }),
-      params: listArticleParams,
+      params: listTripsParams,
       response: {
-        200: articlesResponse,
+        200: tripsResponse,
         404: fastify.getSchema("sNotFound"),
       },
     },
-    handler: onReadArticle,
+    handler: onReadTrip,
   });
 
-  async function onReadArticle(
-    req: FastifyRequest<{ Params: ListArticleParamsType }>,
+  async function onReadTrip(
+    req: FastifyRequest<{ Params: ListTripsParamsType }>,
     reply: FastifyReply
-  ): Promise<IArticle> {
+  ): Promise<ITrip | null> {
     const { id } = req.params;
 
-    const article = await articleService.read({
+    const trip = await tripService.read({
       id,
     });
 
-    return article;
+    return trip;
   }
 }

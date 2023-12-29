@@ -7,7 +7,7 @@ import commonClientErrorsPlugin from "../plugins/commonClientErrors.plugin";
 import loadCommonSchemasPlugin from "../plugins/loadCommonSchemas.plugin";
 import commonHooksPlugin from "../plugins/commonHooks.plugin";
 
-import articleRoutes from "./articles/index";
+import tripRoutes from "./trips/index";
 
 export default async function index(fastify: FastifyInstance) {
   await fastify.register(swaggerPlugin);
@@ -16,5 +16,5 @@ export default async function index(fastify: FastifyInstance) {
   await fastify.register(loadCommonSchemasPlugin);
   await fastify.register(commonHooksPlugin);
 
-  await fastify.register(articleRoutes);
+  await fastify.register(tripRoutes);
 }
