@@ -1,0 +1,27 @@
+version: "3.5"
+
+services:
+  postgres:
+    container_name: postgres-trips
+    image: postgres:14.5
+    restart: always
+    ports:
+      - 15432:5432
+    networks:
+      - database
+    volumes:
+      - postgres-trips:/var/lib/postgresql/data
+      - ./conf/postgres/create-user-and-db.sh:/docker-entrypoint-initdb.d/create-user-and-db.sh
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: "Europe/Rome"
+      PGTZ: "Europe/Rome"
+
+networks:
+  database:
+    name: database
+
+volumes:
+  postgres-trips:
+    name: postgres-trips

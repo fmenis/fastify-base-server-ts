@@ -6,7 +6,10 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node --inspect -r dotenv/config dist/index.js",
-    "dev": "nodemon --config nodemon.json -r dotenv/config src/index.ts "
+    "dev": "nodemon --config nodemon.json -r dotenv/config src/index.ts",
+    "initStack": "cd ./trips-stack && docker compose up -d",
+    "shutdownStack": "cd ./trips-stack && docker compose down -d",
+    "rebuildDb": "./trips-stack/rebuild-db.sh"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +21,11 @@
     "@fastify/sensible": "^5.5.0",
     "@fastify/swagger": "^8.12.2",
     "@fastify/swagger-ui": "^2.0.1",
+    "@prisma/client": "^5.7.1",
     "@sinclair/typebox": "^0.32.3",
     "close-with-grace": "^1.2.0",
-    "fastify": "^4.25.2"
+    "fastify": "^4.25.2",
+    "prisma": "^5.7.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
