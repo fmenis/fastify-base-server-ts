@@ -15,11 +15,11 @@ async function prisma(fastify: FastifyInstance): Promise<void> {
 
   await prisma.$connect();
 
-
   fastify.addHook("onClose", async () => {
     await prisma.$disconnect();
   });
 
+  fastify.decorate("prisma", prisma);
 }
 
 export default fp(prisma);
