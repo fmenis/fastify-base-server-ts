@@ -1,7 +1,7 @@
 export interface ITrip {
   id: string;
   title: string;
-  description?: string | null;
+  description: string | null;
   createdAt: Date;
-  updatedAt?: Date | null;
+  updatedAt: Date | null;
 }

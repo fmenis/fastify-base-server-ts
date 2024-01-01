@@ -9,7 +9,9 @@
     "dev": "nodemon --config nodemon.json -r dotenv/config src/index.ts",
     "initStack": "cd ./trips-stack && docker compose up -d",
     "shutdownStack": "cd ./trips-stack && docker compose down -d",
-    "rebuildDb": "./trips-stack/rebuild-db.sh"
+    "rebuildDb": "./trips-stack/rebuild-db.sh",
+    "applyMigrations": "npx prisma db push --skip-generate",
+    "test:e2e": "tap --ts --jobs=1 test/**/*.spec.ts"
   },
   "keywords": [],
   "author": "",
@@ -28,9 +30,12 @@
     "prisma": "^5.7.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@types/node": "^20.10.5",
+    "@types/tap": "^15.0.11",
     "fastify-tsconfig": "^2.0.0",
     "nodemon": "^3.0.2",
+    "tap": "^16.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }

@@ -1,4 +1,7 @@
-import { Static, Type } from "@sinclair/typebox";
+import { Static, TSchema, Type } from "@sinclair/typebox";
+
+const Nullable = <T extends TSchema>(schema: T) =>
+  Type.Union([schema, Type.Null()]);
 
 export const listTripsQuerystring = Type.Object(
   {
@@ -30,14 +33,12 @@ export type ListTripsParamsType = Static<typeof listTripsParams>;
 
 export const SlistTrips = Type.Object(
   {
-    id: Type.String({ format: "uuid", description: "##TODO" }),
-    title: Type.String({ minLength: 3, description: "##TODO" }),
+    id: Type.String({ format: "uuid", description: "Trip id." }),
+    title: Type.String({ minLength: 3, description: "Trip title." }),
   },
   { additionalProperties: false }
 );
 export type ListTripType = Static<typeof SlistTrips>;
-
-//##TODO improve this mess
 
 export const listTripsResponse = Type.Array(
   Type.Object(
@@ -49,19 +50,19 @@ export const listTripsResponse = Type.Array(
       title: Type.String({
         description: "Trip title.",
       }),
-      description: Type.String({
-        description: "Trip description.",
-      }),
-      createdAt: Type.Optional(
-        Type.Any({
-          //##TODO fix dates
-          description: "Trip creation date.",
+      description: Nullable(
+        Type.String({
+          description: "Trip description.",
         })
       ),
-      updatedAt: Type.Optional(
-        Type.Any({
-          //##TODO fix dates
-          description: "Trip creation date.",
+      createdAt: Type.String({
+        format: "date-time",
+        description: "Trip creation date.",
+      }),
+      updatedAt: Nullable(
+        Type.String({
+          format: "date-time",
+          description: "Trip update date.",
         })
       ),
     },
@@ -78,15 +79,21 @@ export const tripsResponse = Type.Object(
     title: Type.String({
       description: "Trip title.",
     }),
-    description: Type.String({
-      description: "Trip description.",
-    }),
-    createdAt: Type.Any({
+    description: Nullable(
+      Type.String({
+        description: "Trip description.",
+      })
+    ),
+    createdAt: Type.String({
+      format: "date-time",
       description: "Trip creation date.",
     }),
-    updatedAt: Type.Any({
-      description: "Trip creation date.",
-    }),
+    updatedAt: Nullable(
+      Type.String({
+        format: "date-time",
+        description: "Trip creation date.",
+      })
+    ),
   },
   { additionalProperties: false }
 );
