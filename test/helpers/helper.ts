@@ -10,7 +10,6 @@ import { PrismaClient } from "@prisma/client";
 /**
  * ##TODO
  * - understand how apply the migrations
- * - understand how prisma can read the test/.env variables
  */
 
 export type Test = (typeof tap)["Test"]["prototype"];

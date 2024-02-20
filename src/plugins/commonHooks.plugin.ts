@@ -6,9 +6,9 @@ import {
   FastifyRequest,
   FastifyReply,
 } from "fastify";
-import { IClientHttpError } from "../routes/common/interface.common";
+// import { IClientHttpError } from "../routes/common/interface.common";
+import { trimObjectFields } from "../common/utils";
 // import { IClientHttpError } from '../routes/common/interface.common'
-// import { trimObjectFields } from '../common/utils'
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -21,7 +21,7 @@ declare module "fastify" {
 }
 
 async function commonHooks(fastify: FastifyInstance) {
-  // const { env } = fastify
+  // const { emitter } = fastify;
 
   /**
    * Empty object that can be utilized to pass object between hook
@@ -33,28 +33,28 @@ async function commonHooks(fastify: FastifyInstance) {
   /**
    * Additional request logs and trim target body fields
    */
-  // fastify.addHook(
-  //   'preValidation',
-  //   async (req: FastifyRequest, reply: FastifyReply) => {
-  //     const { body, log, user } = req
-  //     if (user) {
-  //       log.debug(
-  //         {
-  //           id: user.id,
-  //           email: user.email,
-  //         },
-  //         'user'
-  //       )
-  //     }
-  //     if (env.ENABLE_BODY_LOG && body) {
-  //       log.debug(body, 'parsed body')
-  //     }
+  fastify.addHook(
+    "preValidation",
+    async (req: FastifyRequest, reply: FastifyReply) => {
+      // const { body, log, user } = req
+      // if (user) {
+      //   log.debug(
+      //     {
+      //       id: user.id,
+      //       email: user.email,
+      //     },
+      //     'user'
+      //   )
+      // }
+      // if (env.ENABLE_BODY_LOG && body) {
+      //   log.debug(body, 'parsed body')
+      // }
 
-  //     if (req.routeConfig.trimBodyFields) {
-  //       req.body = trimObjectFields(req.routeConfig.trimBodyFields, req.body)
-  //     }
-  //   }
-  // )
+      if (req.routeConfig.trimBodyFields && req.body) {
+        req.body = trimObjectFields(req.routeConfig.trimBodyFields, req.body);
+      }
+    }
+  );
 
   /**
    * Set common routes stuff
@@ -76,23 +76,20 @@ async function commonHooks(fastify: FastifyInstance) {
   fastify.addHook(
     "onError",
     async (req: FastifyRequest, reply: FastifyReply, error: FastifyError) => {
-      const clientError: Partial<IClientHttpError> = { ...error };
-
-      clientError.internalCode = clientError.internalCode || "0000";
-      clientError.details = clientError.details || {};
-      clientError.message =
-        reply.statusCode === 500
-          ? "Something went wrong..."
-          : clientError.message;
-      if (clientError.validation) {
-        clientError.details.validation = error.validation;
-      }
-
-      delete clientError.code;
-      delete clientError.details;
-      delete clientError.validationContext;
-
-      return clientError;
+      // const clientError: Partial<IClientHttpError> = { ...error };
+      // clientError.internalCode = clientError.internalCode || "0000";
+      // clientError.details = clientError.details || {};
+      // clientError.message =
+      //   reply.statusCode === 500
+      //     ? "Something went wrong..."
+      //     : clientError.message;
+      // if (clientError.validation) {
+      //   clientError.details.validation = error.validation;
+      // }
+      // delete clientError.code;
+      // delete clientError.validationContext;
+      // emitter.emit("CLIENT_ERROR", error);
+      // return clientError;
     }
   );
 }

@@ -4,6 +4,7 @@ import sensible from "@fastify/sensible";
 import helmet from "@fastify/helmet";
 
 import apiPlugin from "./routes/index";
+import emitterPlugin from "./plugins/emitter.plugin";
 
 export default async function app(fastify: FastifyInstance): Promise<void> {
   fastify.register(cors, {
@@ -15,6 +16,7 @@ export default async function app(fastify: FastifyInstance): Promise<void> {
   fastify.register(sensible);
 
   fastify.register(helmet);
+  fastify.register(emitterPlugin);
 
   await fastify.register(apiPlugin, { prefix: "/api" });
 }
