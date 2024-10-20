@@ -47,3 +47,8 @@ async function run() {
 }
 
 run();
+
+/**
+ * ##TODO
+ * - understand why the --inspect isn't working on dev npm script
+ */

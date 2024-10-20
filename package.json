@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node --inspect -r dotenv/config dist/index.js",
-    "dev": "nodemon --config nodemon.json -r dotenv/config src/index.ts",
+    "dev": "nodemon --config nodemon.json --inspect -r dotenv/config src/index.ts",
     "initStack": "cd ./trips-stack && docker compose up -d",
     "shutdownStack": "cd ./trips-stack && docker compose down -d",
     "rebuildDb": "./trips-stack/rebuild-db.sh",
