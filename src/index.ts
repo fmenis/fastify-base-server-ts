@@ -51,4 +51,6 @@ run();
 /**
  * ##TODO
  * - understand why the --inspect isn't working on dev npm script
+ * - understand how to exec test in parallel
+ * - understand how to apply migrations before tests
  */

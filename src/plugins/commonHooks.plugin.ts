@@ -50,8 +50,11 @@ async function commonHooks(fastify: FastifyInstance) {
       //   log.debug(body, 'parsed body')
       // }
 
-      if (req.routeConfig.trimBodyFields && req.body) {
-        req.body = trimObjectFields(req.routeConfig.trimBodyFields, req.body);
+      if (req.routeOptions.config.trimBodyFields && req.body) {
+        req.body = trimObjectFields(
+          req.routeOptions.config.trimBodyFields,
+          req.body
+        );
       }
     }
   );
