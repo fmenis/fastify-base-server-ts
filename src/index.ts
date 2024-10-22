@@ -4,6 +4,7 @@ import closeWithGrace from 'close-with-grace'
 
 import { ConfigSchemaType, configSchema } from './utils/env.schema'
 import { buildServerOptions } from './utils/serverOpts'
+
 import app from './app'
 
 declare module 'fastify' {
@@ -13,13 +14,12 @@ declare module 'fastify' {
 }
 
 const fastify = Fastify(buildServerOptions())
-const { log } = fastify
 
 closeWithGrace({ delay: 500 }, async ({ signal, err }) => {
   if (err) {
-    log.error({ err }, 'server closing with error')
+    fastify.log.error({ err }, 'server closing with error')
   } else {
-    log.info(`${signal} received, server closing`)
+    fastify.log.info(`${signal} received, server closing`)
   }
   await fastify.close()
 })
@@ -40,9 +40,11 @@ async function run() {
       host: fastify.env.SERVER_ADDRESS,
     })
 
-    log.debug(`Server launched in '${fastify.env.NODE_ENV}' environment`)
+    fastify.log.debug(
+      `Server launched in '${fastify.env.NODE_ENV}' environment`,
+    )
   } catch (error) {
-    log.fatal(error)
+    fastify.log.fatal(error)
     process.exit(1)
   }
 }
