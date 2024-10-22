@@ -53,4 +53,14 @@ run();
  * - understand why the --inspect isn't working on dev npm script
  * - understand how to exec test in parallel
  * - understand how to apply migrations before tests
+ * - remove nodemon
+ * - remove tap and use node test runner
+ * - use autoload
+ * - implement cookie based auth
+ * - add sentry
+ * - add eslint and prettier
+ * - add error handling
+ * - extend buildServerOptions (redact feat, etc)
+ * - add env example
+ * - add pino prettier
  */
