@@ -1,22 +1,22 @@
-import fp from "fastify-plugin";
+import fp from 'fastify-plugin'
 
 import {
   FastifyError,
   FastifyInstance,
   FastifyRequest,
   FastifyReply,
-} from "fastify";
+} from 'fastify'
 // import { IClientHttpError } from "../routes/common/interface.common";
-import { trimObjectFields } from "../common/utils";
+import { trimObjectFields } from '../common/utils'
 // import { IClientHttpError } from '../routes/common/interface.common'
 
-declare module "fastify" {
+declare module 'fastify' {
   interface FastifyRequest {
-    resource: any;
+    resource: any
   }
   interface FastifyContextConfig {
-    trimBodyFields?: string[] | undefined;
-    public?: boolean;
+    trimBodyFields?: string[] | undefined
+    public?: boolean
   }
 }
 
@@ -26,15 +26,15 @@ async function commonHooks(fastify: FastifyInstance) {
   /**
    * Empty object that can be utilized to pass object between hook
    */
-  fastify.addHook("onRequest", async (req) => {
-    req.resource = {};
-  });
+  fastify.addHook('onRequest', async req => {
+    req.resource = {}
+  })
 
   /**
    * Additional request logs and trim target body fields
    */
   fastify.addHook(
-    "preValidation",
+    'preValidation',
     async (req: FastifyRequest, reply: FastifyReply) => {
       // const { body, log, user } = req
       // if (user) {
@@ -53,31 +53,31 @@ async function commonHooks(fastify: FastifyInstance) {
       if (req.routeOptions.config.trimBodyFields && req.body) {
         req.body = trimObjectFields(
           req.routeOptions.config.trimBodyFields,
-          req.body
-        );
+          req.body,
+        )
       }
-    }
-  );
+    },
+  )
 
   /**
    * Set common routes stuff
    */
-  fastify.addHook("onRoute", (options) => {
+  fastify.addHook('onRoute', options => {
     options.schema = {
       ...options.schema,
       response: {
         ...options!.schema!.response!,
-        400: fastify.getSchema("sBadRequest"),
-        500: fastify.getSchema("sInternalServerError"),
+        400: fastify.getSchema('sBadRequest'),
+        500: fastify.getSchema('sInternalServerError'),
       },
-    };
-  });
+    }
+  })
 
   /**
    * Log validation errors
    */
   fastify.addHook(
-    "onError",
+    'onError',
     async (req: FastifyRequest, reply: FastifyReply, error: FastifyError) => {
       // const clientError: Partial<IClientHttpError> = { ...error };
       // clientError.internalCode = clientError.internalCode || "0000";
@@ -93,8 +93,8 @@ async function commonHooks(fastify: FastifyInstance) {
       // delete clientError.validationContext;
       // emitter.emit("CLIENT_ERROR", error);
       // return clientError;
-    }
-  );
+    },
+  )
 }
 
-export default fp(commonHooks);
+export default fp(commonHooks)

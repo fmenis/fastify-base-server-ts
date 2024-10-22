@@ -1,15 +1,15 @@
-import { FastifyError } from "fastify";
+import { FastifyError } from 'fastify'
 
 export interface IPaginatedParams {
-  limit: number;
-  offset: number;
+  limit: number
+  offset: number
 }
 
 export interface IListParams {
-  pagination: IPaginatedParams;
+  pagination: IPaginatedParams
 }
 
 export interface IClientHttpError extends FastifyError {
-  internalCode: string;
-  details: any;
+  internalCode: string
+  details: any
 }

@@ -1,20 +1,20 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance } from 'fastify'
 
-import swaggerPlugin from "../plugins/swagger.plugin";
-import prismaPlugin from "../plugins/prisma.plugin";
+import swaggerPlugin from '../plugins/swagger.plugin'
+import prismaPlugin from '../plugins/prisma.plugin'
 
-import commonClientErrorsPlugin from "../plugins/commonClientErrors.plugin";
-import loadCommonSchemasPlugin from "../plugins/loadCommonSchemas.plugin";
-import commonHooksPlugin from "../plugins/commonHooks.plugin";
+import commonClientErrorsPlugin from '../plugins/commonClientErrors.plugin'
+import loadCommonSchemasPlugin from '../plugins/loadCommonSchemas.plugin'
+import commonHooksPlugin from '../plugins/commonHooks.plugin'
 
-import tripRoutes from "./trips/index";
+import tripRoutes from './trips/index'
 
 export default async function index(fastify: FastifyInstance) {
-  await fastify.register(swaggerPlugin);
-  await fastify.register(prismaPlugin);
-  await fastify.register(commonClientErrorsPlugin);
-  await fastify.register(loadCommonSchemasPlugin);
-  await fastify.register(commonHooksPlugin);
+  await fastify.register(swaggerPlugin)
+  await fastify.register(prismaPlugin)
+  await fastify.register(commonClientErrorsPlugin)
+  await fastify.register(loadCommonSchemasPlugin)
+  await fastify.register(commonHooksPlugin)
 
-  await fastify.register(tripRoutes);
+  await fastify.register(tripRoutes)
 }

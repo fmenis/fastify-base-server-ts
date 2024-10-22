@@ -1,30 +1,30 @@
-import { Type } from "@sinclair/typebox";
+import { Type } from '@sinclair/typebox'
 
 export const noContentSchema = Type.Null({
-  $id: "sNoContent",
-  description: "No Content.",
-});
+  $id: 'sNoContent',
+  description: 'No Content.',
+})
 
 export const acceptedSchema = Type.Null({
-  $id: "sAccepted",
-  description: "Accepted.",
-});
+  $id: 'sAccepted',
+  description: 'Accepted.',
+})
 
 export const notFoundSchema = Type.Object(
   {
     statusCode: Type.Integer({
       default: 404,
-      description: "Http status code.",
+      description: 'Http status code.',
     }),
     error: Type.String({
-      default: "Not found.",
-      description: "Http error.",
+      default: 'Not found.',
+      description: 'Http error.',
     }),
     message: Type.String({
-      description: "Message.",
+      description: 'Message.',
     }),
     internalCode: Type.String({
-      description: "Internal code.",
+      description: 'Internal code.',
     }),
     details: Type.Object(
       {
@@ -32,40 +32,40 @@ export const notFoundSchema = Type.Object(
           Type.Array(
             Type.Object({
               message: Type.String({
-                description: "Validation message.",
+                description: 'Validation message.',
               }),
-            })
-          )
+            }),
+          ),
         ),
       },
       {
         additionalProperties: true,
-        description: "Error details (unstructured data).",
-      }
+        description: 'Error details (unstructured data).',
+      },
     ),
   },
   {
     additionalProperties: false,
-    $id: "sNotFound",
-    description: "Not found.",
-  }
-);
+    $id: 'sNotFound',
+    description: 'Not found.',
+  },
+)
 
 export const badRequestSchema = Type.Object(
   {
     statusCode: Type.Integer({
       default: 400,
-      description: "Http status code.",
+      description: 'Http status code.',
     }),
     error: Type.String({
-      default: "Bad Request.",
-      description: "Http error.",
+      default: 'Bad Request.',
+      description: 'Http error.',
     }),
     message: Type.String({
-      description: "Message.",
+      description: 'Message.',
     }),
     internalCode: Type.String({
-      description: "Internal code.",
+      description: 'Internal code.',
     }),
     details: Type.Object(
       {
@@ -73,40 +73,40 @@ export const badRequestSchema = Type.Object(
           Type.Array(
             Type.Object({
               message: Type.String({
-                description: "Validation message.",
+                description: 'Validation message.',
               }),
-            })
-          )
+            }),
+          ),
         ),
       },
       {
         additionalProperties: true,
-        description: "Error details (unstructured data).",
-      }
+        description: 'Error details (unstructured data).',
+      },
     ),
   },
   {
     additionalProperties: false,
-    $id: "sBadRequest",
-    description: "Bad request.",
-  }
-);
+    $id: 'sBadRequest',
+    description: 'Bad request.',
+  },
+)
 
 export const unauthorizedSchema = Type.Object(
   {
     statusCode: Type.Integer({
       default: 401,
-      description: "Http status code.",
+      description: 'Http status code.',
     }),
     error: Type.String({
-      default: "Unauthorized.",
-      description: "Http error.",
+      default: 'Unauthorized.',
+      description: 'Http error.',
     }),
     message: Type.String({
-      description: "Message.",
+      description: 'Message.',
     }),
     internalCode: Type.String({
-      description: "Internal code.",
+      description: 'Internal code.',
     }),
     details: Type.Object(
       {
@@ -114,40 +114,40 @@ export const unauthorizedSchema = Type.Object(
           Type.Array(
             Type.Object({
               message: Type.String({
-                description: "Validation message.",
+                description: 'Validation message.',
               }),
-            })
-          )
+            }),
+          ),
         ),
       },
       {
         additionalProperties: true,
-        description: "Error details (unstructured data).",
-      }
+        description: 'Error details (unstructured data).',
+      },
     ),
   },
   {
     additionalProperties: false,
-    $id: "sUnauthorized",
-    description: "Unauthorized.",
-  }
-);
+    $id: 'sUnauthorized',
+    description: 'Unauthorized.',
+  },
+)
 
 export const forbiddenSchema = Type.Object(
   {
     statusCode: Type.Integer({
       default: 403,
-      description: "Http status code.",
+      description: 'Http status code.',
     }),
     error: Type.String({
-      default: "Forbidden.",
-      description: "Http error.",
+      default: 'Forbidden.',
+      description: 'Http error.',
     }),
     message: Type.String({
-      description: "Message.",
+      description: 'Message.',
     }),
     internalCode: Type.String({
-      description: "Internal code.",
+      description: 'Internal code.',
     }),
     details: Type.Object(
       {
@@ -155,40 +155,40 @@ export const forbiddenSchema = Type.Object(
           Type.Array(
             Type.Object({
               message: Type.String({
-                description: "Validation message.",
+                description: 'Validation message.',
               }),
-            })
-          )
+            }),
+          ),
         ),
       },
       {
         additionalProperties: true,
-        description: "Error details (unstructured data).",
-      }
+        description: 'Error details (unstructured data).',
+      },
     ),
   },
   {
     additionalProperties: false,
-    $id: "sForbidden",
-    description: "Forbidden.",
-  }
-);
+    $id: 'sForbidden',
+    description: 'Forbidden.',
+  },
+)
 
 export const conflictSchema = Type.Object(
   {
     statusCode: Type.Integer({
       default: 409,
-      description: "Http status code.",
+      description: 'Http status code.',
     }),
     error: Type.String({
-      default: "Conflict.",
-      description: "Http error.",
+      default: 'Conflict.',
+      description: 'Http error.',
     }),
     message: Type.String({
-      description: "Message.",
+      description: 'Message.',
     }),
     internalCode: Type.String({
-      description: "Internal code.",
+      description: 'Internal code.',
     }),
     details: Type.Object(
       {
@@ -196,45 +196,45 @@ export const conflictSchema = Type.Object(
           Type.Array(
             Type.Object({
               message: Type.String({
-                description: "Validation message.",
+                description: 'Validation message.',
               }),
-            })
-          )
+            }),
+          ),
         ),
       },
       {
         additionalProperties: true,
-        description: "Error details (unstructured data).",
-      }
+        description: 'Error details (unstructured data).',
+      },
     ),
   },
   {
     additionalProperties: false,
-    $id: "sConflict",
-    description: "Conflict.",
-  }
-);
+    $id: 'sConflict',
+    description: 'Conflict.',
+  },
+)
 
 export const internalServerErrorSchema = Type.Object(
   {
     statusCode: Type.Integer({
       default: 500,
-      description: "Http status code.",
+      description: 'Http status code.',
     }),
     error: Type.String({
-      default: "Internal Server Error.",
-      description: "Http error.",
+      default: 'Internal Server Error.',
+      description: 'Http error.',
     }),
     message: Type.String({
-      description: "Message.",
+      description: 'Message.',
     }),
     internalCode: Type.String({
-      description: "Internal code.",
+      description: 'Internal code.',
     }),
   },
   {
     additionalProperties: false,
-    $id: "sInternalServerError",
-    description: "Internal Server Error.",
-  }
-);
+    $id: 'sInternalServerError',
+    description: 'Internal Server Error.',
+  },
+)

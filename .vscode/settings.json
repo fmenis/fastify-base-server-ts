@@ -1,3 +1,12 @@
 {
-  "cSpell.words": ["fastify", "Filippo", "Menis", "openapi", "Slist", "typebox"]
+  "cSpell.words": [
+    "fastify",
+    "Filippo",
+    "Menis",
+    "openapi",
+    "Slist",
+    "typebox"
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }
