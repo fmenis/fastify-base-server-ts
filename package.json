@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node --inspect -r dotenv/config dist/index.js",
-    "dev": "node --watch --inspect -r ts-node/register -r dotenv/config src/index.ts",
+    "dev": "node --watch --inspect -r ts-node/register -r dotenv/config src/index.ts | pino-pretty",
     "initStack": "cd ./trips-stack && docker compose up -d",
     "shutdownStack": "cd ./trips-stack && docker compose down -d",
     "rebuildDb": "./trips-stack/rebuild-db.sh",
@@ -35,6 +35,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "fastify-tsconfig": "^2.0.0",
+    "pino-pretty": "^11.3.0",
     "prettier": "^3.3.3",
     "tap": "^16.3.4",
     "ts-node": "^10.9.2",
