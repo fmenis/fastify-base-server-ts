@@ -17,9 +17,10 @@ const { log } = fastify
 
 closeWithGrace({ delay: 500 }, async ({ signal, err }) => {
   if (err) {
-    log.error(err)
+    log.error({ err }, 'server closing with error')
+  } else {
+    log.info(`${signal} received, server closing`)
   }
-  log.debug(`'${signal}' signal received. Gracefully closing fastify server`)
   await fastify.close()
 })
 
