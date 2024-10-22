@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node --inspect -r dotenv/config dist/index.js",
-    "dev": "node --watch --inspect -r ts-node/register -r dotenv/config src/index.ts | pino-pretty",
+    "dev": "node --watch --inspect -r dotenv/config -r ts-node/register src/index.ts | pino-pretty",
     "initStack": "cd ./trips-stack && docker compose up -d",
     "shutdownStack": "cd ./trips-stack && docker compose down -d",
     "rebuildDb": "./trips-stack/rebuild-db.sh",

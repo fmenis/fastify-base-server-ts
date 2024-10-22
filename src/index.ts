@@ -58,6 +58,4 @@ run()
  * - add sentry
  * - add eslint
  * - add error handling
- * - extend buildServerOptions (redact feat, etc)
- * - add env example
  */
