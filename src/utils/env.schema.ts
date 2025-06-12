@@ -9,7 +9,8 @@ function StringEnum<T extends string[]>(values: [...T]) {
 
 export const configSchema = Type.Object(
   {
-    NODE_ENV: StringEnum([
+    NODE_ENV: Type.String({ default: ENV.PRODUCTION }),
+    APP_ENV: StringEnum([
       ENV.LOCAL,
       ENV.TEST,
       ENV.DEVELOPMENT,

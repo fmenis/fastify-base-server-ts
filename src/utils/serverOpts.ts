@@ -11,13 +11,13 @@ export function buildServerOptions(): FastifyServerOptions {
         useDefaults: true
       },
     },
+    trustProxy: true //##TODO verify with nginx
   }
 }
 
 function buildLoggerOptions(): LoggerOptions {
   const options: LoggerOptions = {
-    level: "debug",
-    // level: process.env.LOG_LEVEL, ##TODO le env non vengono ancora caricate
+    level: process.env.LOG_LEVEL,
     timestamp: () => stdTimeFunctions.isoTime(),
     formatters: {
       level(label) {

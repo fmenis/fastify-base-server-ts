@@ -11,7 +11,8 @@
 			"runtimeExecutable": "tsx",
 			"console": "integratedTerminal",
 			"internalConsoleOptions": "neverOpen",
-			"program": "${workspaceFolder}/dist/index.js",
+			"program": "${workspaceFolder}/src/index.ts",
+			"envFile": "${workspaceFolder}/.env",
 			"skipFiles": [
 				"<node_internals>/**",
 				"${workspaceFolder}/node_modules/**",

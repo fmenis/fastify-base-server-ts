@@ -29,7 +29,7 @@ async function run() {
 		})
 
 		fastify.log.debug(
-			`Server launched in '${fastify.env.NODE_ENV}' environment`,
+			`Server launched in '${fastify.env.APP_ENV}' environment`,
 		)
 	} catch (error) {
 		fastify.log.fatal(error)
