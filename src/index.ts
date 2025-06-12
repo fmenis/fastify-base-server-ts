@@ -1,19 +1,47 @@
 import Fastify from 'fastify';
+import env from '@fastify/env'
 
-const app = Fastify({ logger: true });
+import { configSchema } from './utils/env.schema.js';
 
-app.get('/', async (_request, reply) => {
-	return { message: 'Hello from Fastify + TypeScript + ESM' };
-});
-
-const start = async () => {
-	try {
-		await app.listen({ port: 3000 });
-		console.log('Server listening on http://localhost:3000');
-	} catch (err) {
-		app.log.error(err);
-		process.exit(1);
+declare module 'fastify' {
+	interface FastifyInstance {
+		env: any
 	}
-};
+}
 
-start();
+
+const fastify = Fastify({
+	logger: {
+		level: "debug"
+	}
+})
+//##TODO
+// const fastify = Fastify(buildServerOptions())
+
+
+async function run() {
+	try {
+		await fastify.register(env, {
+			confKey: 'env',
+			dotenv: true,
+			schema: configSchema,
+		})
+
+		// await fastify.register(app)
+		await fastify.ready()
+
+		await fastify.listen({
+			port: fastify.env.SERVER_PORT,
+			host: fastify.env.SERVER_ADDRESS,
+		})
+
+		fastify.log.debug(
+			`Server launched in '${fastify.env.NODE_ENV}' environment`,
+		)
+	} catch (error) {
+		fastify.log.fatal(error)
+		process.exit(1)
+	}
+}
+
+run()
