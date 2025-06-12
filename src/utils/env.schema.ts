@@ -1,4 +1,4 @@
-import { ENV } from "../common/enum.js";
+import { APP_ENV } from "../common/enum.js";
 
 import { Static, Type } from "@sinclair/typebox";
 import { levels } from "pino";
@@ -9,13 +9,13 @@ function StringEnum<T extends string[]>(values: [...T]) {
 
 export const configSchema = Type.Object(
   {
-    NODE_ENV: Type.String({ default: ENV.PRODUCTION }),
+    NODE_ENV: Type.String({ default: APP_ENV.PRODUCTION }),
     APP_ENV: StringEnum([
-      ENV.LOCAL,
-      ENV.TEST,
-      ENV.DEVELOPMENT,
-      ENV.STAGING,
-      ENV.PRODUCTION,
+      APP_ENV.LOCAL,
+      APP_ENV.TEST,
+      APP_ENV.DEVELOPMENT,
+      APP_ENV.STAGING,
+      APP_ENV.PRODUCTION,
     ]),
     SERVER_ADDRESS: Type.String({ default: "127.0.0.1" }),
     SERVER_PORT: Type.Number({ default: 3000 }),
