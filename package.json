@@ -5,10 +5,12 @@
   "main": "./dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "node -r dotenv/config dist/index.js",
     "dev": "tsx watch --inspect -r dotenv/config src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "prettier '**.ts' --write",
+    "lint-check": "prettier '**.ts' --check",
     "type-check": "tsc --noEmit"
   },
   "author": "filippomeniswork@gmail.com",
@@ -19,11 +21,13 @@
     "dotenv": "^16.5.0",
     "fastify": "^5.3.3",
     "npm": "^11.4.1",
-    "pino": "^9.7.0"
+    "pino": "^9.7.0",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "fastify-tsconfig": "^3.0.0",
+    "prettier": "^3.5.3",
     "tsx": "^4.20.1",
     "typescript": "^5.8.3"
   }

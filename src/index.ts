@@ -1,40 +1,40 @@
-import Fastify, { FastifyInstance } from 'fastify';
-import env from '@fastify/env'
+import Fastify, { FastifyInstance } from "fastify";
+import env from "@fastify/env";
 
-import { configSchema } from './utils/env.schema.js';
-import { buildServerOptions } from './utils/serverOpts.js';
+import { configSchema, ConfigSchemaType } from "./utils/env.schema.js";
+import { buildServerOptions } from "./utils/serverOpts.js";
 
-declare module 'fastify' {
-	interface FastifyInstance {
-		env: any
-	}
+declare module "fastify" {
+  interface FastifyInstance {
+    env: ConfigSchemaType;
+  }
 }
 
-const fastify: FastifyInstance = Fastify(buildServerOptions())
+const fastify: FastifyInstance = Fastify(buildServerOptions());
 
 async function run() {
-	try {
-		await fastify.register(env, {
-			confKey: 'env',
-			dotenv: true,
-			schema: configSchema,
-		})
+  try {
+    await fastify.register(env, {
+      confKey: "env",
+      dotenv: true,
+      schema: configSchema,
+    });
 
-		// await fastify.register(app)
-		await fastify.ready()
+    // await fastify.register(app)
+    await fastify.ready();
 
-		await fastify.listen({
-			port: fastify.env.SERVER_PORT,
-			host: fastify.env.SERVER_ADDRESS,
-		})
+    await fastify.listen({
+      port: fastify.env.SERVER_PORT,
+      host: fastify.env.SERVER_ADDRESS,
+    });
 
-		fastify.log.debug(
-			`Server launched in '${fastify.env.APP_ENV}' environment`,
-		)
-	} catch (error) {
-		fastify.log.fatal(error)
-		process.exit(1)
-	}
+    fastify.log.debug(
+      `Server launched in '${fastify.env.APP_ENV}' environment`,
+    );
+  } catch (error) {
+    fastify.log.fatal(error);
+    process.exit(1);
+  }
 }
 
-run()
+run();
