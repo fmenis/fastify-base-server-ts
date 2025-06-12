@@ -1,7 +1,8 @@
-import Fastify from 'fastify';
+import Fastify, { FastifyInstance } from 'fastify';
 import env from '@fastify/env'
 
 import { configSchema } from './utils/env.schema.js';
+import { buildServerOptions } from './utils/serverOpts.js';
 
 declare module 'fastify' {
 	interface FastifyInstance {
@@ -9,15 +10,7 @@ declare module 'fastify' {
 	}
 }
 
-
-const fastify = Fastify({
-	logger: {
-		level: "debug"
-	}
-})
-//##TODO
-// const fastify = Fastify(buildServerOptions())
-
+const fastify: FastifyInstance = Fastify(buildServerOptions())
 
 async function run() {
 	try {

@@ -1,44 +1,40 @@
 import { FastifyServerOptions } from 'fastify'
-// import pino, { stdTimeFunctions, LoggerOptions, Logger } from 'pino'
+import { stdTimeFunctions, LoggerOptions } from 'pino'
 
 export function buildServerOptions(): FastifyServerOptions {
   return {
-    // loggerInstance: {
-    //   level: "debug"
-    // },
+    logger: buildLoggerOptions(),
     ajv: {
       customOptions: {
         allErrors: true,
         removeAdditional: false,
-        // coerceTypes: 'array',
-        // useDefaults ##TODO see if useful https://ajv.js.org/options.html#usedefaults
+        useDefaults: true
       },
     },
   }
 }
 
-// function buildLoggerInstance(): Logger {
-//   const loggerOptions: LoggerOptions = {
-//     level: process.env.LOG_LEVEL,
-//     timestamp: () => stdTimeFunctions.isoTime(),
-//     formatters: {
-//       level(label) {
-//         return { level: label }
-//       },
-//       bindings() {
-//         return { pid: undefined, hostname: undefined }
-//       },
-//     },
-//     redact: {
-//       paths: [
-//         'password',
-//         'oldPassword',
-//         'newPassword',
-//         'newPasswordConfirmation',
-//       ],
-//       censor: '**GDPR COMPLIANT**',
-//     },
-//   }
+function buildLoggerOptions(): LoggerOptions {
+  const options: LoggerOptions = {
+    level: "debug",
+    // level: process.env.LOG_LEVEL, ##TODO le env non vengono ancora caricate
+    timestamp: () => stdTimeFunctions.isoTime(),
+    formatters: {
+      level(label) {
+        return { level: label }
+      },
+    },
+    base: undefined,
+    redact: {
+      paths: [
+        'password',
+        'oldPassword',
+        'newPassword',
+        'newPasswordConfirmation',
+      ],
+      censor: '**GDPR COMPLIANT**',
+    }
+  }
 
-//   return pino(loggerOptions)
-// }
+  return options
+}
