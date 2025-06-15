@@ -2,7 +2,8 @@ import Fastify, { FastifyInstance } from "fastify";
 import env from "@fastify/env";
 
 import { configSchema, ConfigSchemaType } from "./utils/env.schema.js";
-import { buildServerOptions } from "./utils/serverOpts.js";
+import { buildServerOptions } from "./utils/server.options.js";
+import app from "./app.js";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -20,7 +21,7 @@ async function run() {
       schema: configSchema,
     });
 
-    // await fastify.register(app)
+    await fastify.register(app);
     await fastify.ready();
 
     await fastify.listen({
