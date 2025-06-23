@@ -1,7 +1,9 @@
 export interface IUser {
   id: string;
-  name: string;
-  // description: string | null;
-  // createdAt: Date;
-  // updatedAt: Date | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt?: any; //##TODO
 }

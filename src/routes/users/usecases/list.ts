@@ -28,9 +28,9 @@ export default async function listUsers(
         description: "List users.",
       }),
       querystring: listUsersQuerystring,
-      response: {
-        200: listTripsResponse,
-      },
+      // response: { //##TODO
+      //   200: listTripsResponse,
+      // },
     },
     handler: onListUsers,
   });

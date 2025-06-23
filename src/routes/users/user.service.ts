@@ -16,10 +16,17 @@ declare module "fastify" {
 export interface IListUsersParams extends IListParams {}
 
 async function userService(fastify: FastifyInstance): Promise<void> {
-  // const { prisma, commonClientErrors } = fastify
+  const { prisma } = fastify;
 
   async function list(params: IListUsersParams): Promise<Readonly<IUser[]>> {
-    return [];
+    const { limit, offset } = params.pagination;
+
+    const users = await prisma.user.findMany({
+      take: limit,
+      skip: offset,
+    });
+
+    return users;
   }
 
   fastify.decorate("userService", {
