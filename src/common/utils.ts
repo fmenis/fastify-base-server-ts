@@ -1,3 +1,5 @@
+import { PaginationParams } from "./interface.js";
+
 export function buildRouteFullDescription(params: {
   api: string;
   description: string;
@@ -30,4 +32,16 @@ export function buildRouteFullDescription(params: {
   }
 
   return fullDescription;
+}
+
+export function buildPaginationParams(paginationParams: PaginationParams): {
+  take: number;
+  skip: number;
+} {
+  const { limit, offset } = paginationParams;
+
+  return {
+    take: limit,
+    skip: offset,
+  };
 }

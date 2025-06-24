@@ -1,29 +1,44 @@
 import { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 
-import { IUser } from "./user.interfaces.js";
-import { IListParams } from "../../common/interface.common.js";
+import { User } from "./user.interfaces.js";
+import { PaginationParams } from "../../common/interface.js";
+import { buildPaginationParams } from "../../common/utils.js";
 
 declare module "fastify" {
   interface FastifyInstance {
     userService: {
-      list(params: IListUsersParams): Promise<Readonly<IUser[]>>;
+      list(params: {
+        filters: ListUsersFilters;
+        pagination: PaginationParams;
+      }): Promise<Readonly<User[]>>;
       // read(params: { id: string }): Promise<ITrip | null>
     };
   }
 }
 
-export interface IListUsersParams extends IListParams {}
+export interface ListUsersFilters {
+  email?: string;
+}
 
 async function userService(fastify: FastifyInstance): Promise<void> {
   const { prisma } = fastify;
 
-  async function list(params: IListUsersParams): Promise<Readonly<IUser[]>> {
-    const { limit, offset } = params.pagination;
+  async function list(params: {
+    filters: ListUsersFilters;
+    pagination: PaginationParams;
+  }): Promise<Readonly<User[]>> {
+    const { filters, pagination } = params;
 
     const users = await prisma.user.findMany({
-      take: limit,
-      skip: offset,
+      ...buildPaginationParams(pagination),
+      where: {
+        AND: {
+          email: {
+            contains: filters.email,
+          },
+        },
+      },
     });
 
     return users;

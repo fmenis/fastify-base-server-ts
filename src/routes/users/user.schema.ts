@@ -1,10 +1,32 @@
-import { Static, TSchema, Type } from "@sinclair/typebox";
+import { Static, Type } from "@sinclair/typebox";
+import { Nullable } from "../../common/schema.js";
 
-const Nullable = <T extends TSchema>(schema: T) =>
-  Type.Union([schema, Type.Null()]);
+//##TODO deep dive into additionalProperties when using Type.Intersect
+// export const listUsersQuerystring = Type.Intersect([
+//   paginationSchema,
+//   Type.Object(
+//     {
+//       email: Type.Optional(
+//         Type.String({
+//           minLength: 3,
+//           maxLength: 100,
+//           description: "User email.",
+//         }),
+//       ),
+//     },
+//     { additionalProperties: true },
+//   ),
+// ]);
 
 export const listUsersQuerystring = Type.Object(
   {
+    email: Type.Optional(
+      Type.String({
+        minLength: 3,
+        maxLength: 100,
+        description: "User email.",
+      }),
+    ),
     limit: Type.Integer({
       maximum: 100,
       default: 10,
@@ -18,82 +40,48 @@ export const listUsersQuerystring = Type.Object(
   },
   { additionalProperties: false },
 );
+
 export type ListUsersQuerystringType = Static<typeof listUsersQuerystring>;
 
-export const listTripsParams = Type.Object(
-  {
-    id: Type.String({
-      format: "uuid",
-      description: "Trip id.",
-    }),
-  },
-  { additionalProperties: false },
-);
-export type ListTripsParamsType = Static<typeof listTripsParams>;
-
-export const SlistTrips = Type.Object(
-  {
-    id: Type.String({ format: "uuid", description: "Trip id." }),
-    title: Type.String({ minLength: 3, description: "Trip title." }),
-  },
-  { additionalProperties: false },
-);
-export type ListTripType = Static<typeof SlistTrips>;
-
-export const listTripsResponse = Type.Array(
+export const listUsersResponse = Type.Array(
   Type.Object(
     {
       id: Type.String({
         format: "uuid",
-        description: "Trip id.",
+        description: "User id.",
       }),
-      title: Type.String({
-        description: "Trip title.",
+      firstName: Type.String({
+        minLength: 3,
+        maxLength: 100,
+        description: "User first name.",
       }),
-      description: Nullable(
-        Type.String({
-          description: "Trip description.",
-        }),
-      ),
+      lastName: Type.String({
+        minLength: 3,
+        maxLength: 100,
+        description: "User last name.",
+      }),
+      email: Type.String({
+        minLength: 5,
+        format: "email",
+        maxLength: 100,
+        description: "User email.",
+      }),
+      password: Type.String({
+        minLength: 60,
+        maxLength: 60,
+        description: "User password.",
+      }),
       createdAt: Type.String({
         format: "date-time",
-        description: "Trip creation date.",
+        description: "User creation date.",
       }),
       updatedAt: Nullable(
         Type.String({
           format: "date-time",
-          description: "Trip update date.",
+          description: "User update date.",
         }),
       ),
     },
     { additionalProperties: false },
   ),
-);
-
-export const tripsResponse = Type.Object(
-  {
-    id: Type.String({
-      format: "uuid",
-      description: "Trip id.",
-    }),
-    title: Type.String({
-      description: "Trip title.",
-    }),
-    description: Nullable(
-      Type.String({
-        description: "Trip description.",
-      }),
-    ),
-    createdAt: Type.String({
-      format: "date-time",
-      description: "Trip creation date.",
-    }),
-    updatedAt: Nullable(
-      Type.String({
-        format: "date-time",
-        description: "Trip creation date.",
-      }),
-    ),
-  },
-  { additionalProperties: false },
 );

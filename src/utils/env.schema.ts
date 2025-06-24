@@ -1,11 +1,8 @@
-import { APP_ENV } from "../common/enum.js";
-
 import { Static, Type } from "@sinclair/typebox";
 import { levels } from "pino";
 
-function StringEnum<T extends string[]>(values: [...T]) {
-  return Type.Unsafe<T[number]>({ type: "string", enum: values });
-}
+import { APP_ENV } from "../common/enum.js";
+import { StringEnum } from "../common/schema.js";
 
 export const configSchema = Type.Object(
   {

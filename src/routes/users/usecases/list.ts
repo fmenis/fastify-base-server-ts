@@ -8,14 +8,16 @@ import {
 import {
   ListUsersQuerystringType,
   listUsersQuerystring,
-  listTripsResponse,
+  listUsersResponse,
 } from "../user.schema.js";
-import { IUser } from "../user.interfaces.js";
+import { User } from "../user.interfaces.js";
 import { buildRouteFullDescription } from "../../../common/utils.js";
+import { ListUsersFilters } from "../user.service.js";
+import { PaginationParams } from "../../../common/interface.js";
 
 export default async function listUsers(
   fastify: FastifyInstance,
-  opts: RegisterOptions,
+  opts: RegisterOptions, //##TODO add eslint rule for unused variables
 ) {
   const { userService } = fastify;
 
@@ -28,9 +30,9 @@ export default async function listUsers(
         description: "List users.",
       }),
       querystring: listUsersQuerystring,
-      // response: { //##TODO
-      //   200: listTripsResponse,
-      // },
+      response: {
+        200: listUsersResponse,
+      },
     },
     handler: onListUsers,
   });
@@ -38,14 +40,21 @@ export default async function listUsers(
   async function onListUsers(
     req: FastifyRequest<{ Querystring: ListUsersQuerystringType }>,
     reply: FastifyReply,
-  ): Promise<Readonly<IUser[]>> {
-    const { limit, offset } = req.query;
+  ): Promise<Readonly<User[]>> {
+    const { email, limit, offset } = req.query;
+
+    const filters: ListUsersFilters = {
+      email,
+    };
+
+    const pagination: PaginationParams = {
+      limit,
+      offset,
+    };
 
     const users = await userService.list({
-      pagination: {
-        limit,
-        offset,
-      },
+      filters,
+      pagination,
     });
 
     return users;
