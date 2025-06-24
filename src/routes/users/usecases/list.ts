@@ -11,7 +11,7 @@ import {
   listUsersResponse,
 } from "../user.schema.js";
 import { User } from "../user.interfaces.js";
-import { buildRouteFullDescription } from "../../../common/utils.js";
+import { buildRouteFullDescription } from "../../../utils/utils.js";
 import { ListUsersFilters } from "../user.service.js";
 import { PaginationParams } from "../../../common/interface.js";
 

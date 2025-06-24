@@ -3,7 +3,7 @@ import fp from "fastify-plugin";
 
 import { User } from "./user.interfaces.js";
 import { PaginationParams } from "../../common/interface.js";
-import { buildPaginationParams } from "../../common/utils.js";
+import { buildPaginationParams } from "../../utils/utils.js";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -12,7 +12,6 @@ declare module "fastify" {
         filters: ListUsersFilters;
         pagination: PaginationParams;
       }): Promise<Readonly<User[]>>;
-      // read(params: { id: string }): Promise<ITrip | null>
     };
   }
 }
@@ -38,6 +37,9 @@ async function userService(fastify: FastifyInstance): Promise<void> {
             contains: filters.email,
           },
         },
+      },
+      orderBy: {
+        createdAt: "asc",
       },
     });
 
