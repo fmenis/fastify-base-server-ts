@@ -45,6 +45,10 @@ async function openApi(fastify: FastifyInstance): Promise<void> {
 
   await fastify.register(fastifySwaggerUi, {
     routePrefix: "/doc",
+    uiConfig: {
+      docExpansion: "list",
+      deepLinking: false, //##TODO deep dive
+    },
   });
 }
 

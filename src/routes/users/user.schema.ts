@@ -18,7 +18,7 @@ import { Nullable } from "../../common/schema.js";
 //   ),
 // ]);
 
-export const listUsersQuerystring = Type.Object(
+export const listUsersQuerySchema = Type.Object(
   {
     email: Type.Optional(
       Type.String({
@@ -41,47 +41,47 @@ export const listUsersQuerystring = Type.Object(
   { additionalProperties: false },
 );
 
-export type ListUsersQuerystringType = Static<typeof listUsersQuerystring>;
+export type ListUsersQuerystringType = Static<typeof listUsersQuerySchema>;
 
-export const listUsersResponse = Type.Array(
-  Type.Object(
-    {
-      id: Type.String({
-        format: "uuid",
-        description: "User id.",
-      }),
-      firstName: Type.String({
-        minLength: 3,
-        maxLength: 100,
-        description: "User first name.",
-      }),
-      lastName: Type.String({
-        minLength: 3,
-        maxLength: 100,
-        description: "User last name.",
-      }),
-      email: Type.String({
-        minLength: 5,
-        format: "email",
-        maxLength: 100,
-        description: "User email.",
-      }),
-      password: Type.String({
-        minLength: 60,
-        maxLength: 60,
-        description: "User password.",
-      }),
-      createdAt: Type.String({
+export const userSchema = Type.Object(
+  {
+    id: Type.String({
+      format: "uuid",
+      description: "User id.",
+    }),
+    firstName: Type.String({
+      minLength: 3,
+      maxLength: 100,
+      description: "User first name.",
+    }),
+    lastName: Type.String({
+      minLength: 3,
+      maxLength: 100,
+      description: "User last name.",
+    }),
+    email: Type.String({
+      minLength: 5,
+      format: "email",
+      maxLength: 100,
+      description: "User email.",
+    }),
+    password: Type.String({
+      minLength: 60,
+      maxLength: 60,
+      description: "User password.",
+    }),
+    createdAt: Type.String({
+      format: "date-time",
+      description: "User creation date.",
+    }),
+    updatedAt: Nullable(
+      Type.String({
         format: "date-time",
-        description: "User creation date.",
+        description: "User update date.",
       }),
-      updatedAt: Nullable(
-        Type.String({
-          format: "date-time",
-          description: "User update date.",
-        }),
-      ),
-    },
-    { additionalProperties: false },
-  ),
+    ),
+  },
+  {
+    additionalProperties: false,
+  },
 );

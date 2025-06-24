@@ -4,11 +4,12 @@ import {
   FastifyRequest,
   RegisterOptions,
 } from "fastify";
+import { Type } from "@sinclair/typebox";
 
 import {
   ListUsersQuerystringType,
-  listUsersQuerystring,
-  listUsersResponse,
+  listUsersQuerySchema,
+  userSchema,
 } from "../user.schema.js";
 import { User } from "../user.interfaces.js";
 import { buildRouteFullDescription } from "../../../utils/utils.js";
@@ -29,9 +30,13 @@ export default async function listUsers(
         api: "list",
         description: "List users.",
       }),
-      querystring: listUsersQuerystring,
+      querystring: listUsersQuerySchema,
       response: {
-        200: listUsersResponse,
+        200: Type.Object(
+          { results: Type.Array(userSchema) },
+          //##TODO missing pagination data
+          { description: "User list results" },
+        ),
       },
     },
     handler: onListUsers,

@@ -5,6 +5,8 @@ import helmet from "@fastify/helmet";
 
 import apiPlugin from "./routes/index.js";
 import openApiPlugin from "./plugins/openApi.plugin.js";
+import loadCommonSchemas from "./plugins/loadCommonSchemas.plugin.js";
+import commonHooks from "./plugins/commonHooks.plugin.js";
 
 export default async function app(fastify: FastifyInstance): Promise<void> {
   fastify.register(cors, {
@@ -17,6 +19,8 @@ export default async function app(fastify: FastifyInstance): Promise<void> {
   fastify.register(helmet);
 
   await fastify.register(openApiPlugin);
+  await fastify.register(loadCommonSchemas);
+  await fastify.register(commonHooks);
 
   await fastify.register(apiPlugin, { prefix: "/api" });
 }
