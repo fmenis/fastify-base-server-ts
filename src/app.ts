@@ -4,6 +4,7 @@ import sensible from "@fastify/sensible";
 import helmet from "@fastify/helmet";
 
 import apiPlugin from "./routes/index.js";
+import openApiPlugin from "./plugins/openApi.plugin.js";
 
 export default async function app(fastify: FastifyInstance): Promise<void> {
   fastify.register(cors, {
@@ -14,6 +15,8 @@ export default async function app(fastify: FastifyInstance): Promise<void> {
 
   fastify.register(sensible);
   fastify.register(helmet);
+
+  await fastify.register(openApiPlugin);
 
   await fastify.register(apiPlugin, { prefix: "/api" });
 }

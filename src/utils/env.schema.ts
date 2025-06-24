@@ -9,7 +9,6 @@ export const configSchema = Type.Object(
     NODE_ENV: Type.String({ default: APP_ENV.PRODUCTION }),
     APP_ENV: StringEnum([
       APP_ENV.LOCAL,
-      APP_ENV.TEST,
       APP_ENV.DEVELOPMENT,
       APP_ENV.STAGING,
       APP_ENV.PRODUCTION,
