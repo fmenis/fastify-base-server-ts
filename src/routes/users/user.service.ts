@@ -21,13 +21,15 @@ export interface ListUsersFilters {
 }
 
 async function userService(fastify: FastifyInstance): Promise<void> {
-  const { prisma } = fastify;
+  const { prisma, commonClientErrors } = fastify;
 
   async function list(params: {
     filters: ListUsersFilters;
     pagination: PaginationParams;
   }): Promise<Readonly<User[]>> {
     const { filters, pagination } = params;
+
+    commonClientErrors.throwNotFoundError({ id: "fgfdsgsfg", name: "user" });
 
     const users = await prisma.user.findMany({
       ...buildPaginationParams(pagination),

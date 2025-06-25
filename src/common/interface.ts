@@ -13,3 +13,8 @@ export interface ClientHttpError extends FastifyError {
   internalCode: string;
   details: any;
 }
+
+export interface IClientHttpError extends FastifyError {
+  internalCode: string;
+  details: any;
+}

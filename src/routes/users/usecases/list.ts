@@ -37,6 +37,7 @@ export default async function listUsers(
           //##TODO missing pagination data
           { description: "User list results" },
         ),
+        404: fastify.getSchema("sNotFound"),
       },
     },
     handler: onListUsers,

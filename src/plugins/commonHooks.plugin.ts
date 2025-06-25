@@ -1,11 +1,15 @@
 import fp from "fastify-plugin";
 
 import {
+  FastifyError,
   // FastifyError,
   FastifyInstance,
+  FastifyReply,
+  FastifyRequest,
   // FastifyRequest,
   // FastifyReply,
 } from "fastify";
+import { IClientHttpError } from "../common/interface.js";
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -63,7 +67,7 @@ async function commonHooks(fastify: FastifyInstance) {
     options.schema = {
       ...options.schema,
       response: {
-        ...options!.schema!.response!,
+        ...options.schema!.response!,
         400: fastify.getSchema("sBadRequest"),
         500: fastify.getSchema("sInternalServerError"),
       },
@@ -73,25 +77,75 @@ async function commonHooks(fastify: FastifyInstance) {
   /**
    * Log validation errors
    */
-  // fastify.addHook(
-  //   'onError',
-  //   async (req: FastifyRequest, reply: FastifyReply, error: FastifyError) => {
-  //     // const clientError: Partial<IClientHttpError> = { ...error };
-  //     // clientError.internalCode = clientError.internalCode || "0000";
-  //     // clientError.details = clientError.details || {};
-  //     // clientError.message =
-  //     //   reply.statusCode === 500
-  //     //     ? "Something went wrong..."
-  //     //     : clientError.message;
-  //     // if (clientError.validation) {
-  //     //   clientError.details.validation = error.validation;
-  //     // }
-  //     // delete clientError.code;
-  //     // delete clientError.validationContext;
-  //     // emitter.emit("CLIENT_ERROR", error);
-  //     // return clientError;
+  //##TODO it doesn't work for validation fails
+  fastify.addHook(
+    "onError",
+    async (req: FastifyRequest, reply: FastifyReply, error: FastifyError) => {
+      const clientError: Partial<IClientHttpError> = { ...error };
+
+      clientError.internalCode = clientError.internalCode || "0000";
+      clientError.details = clientError.details || {};
+
+      clientError.message =
+        reply.statusCode === 500
+          ? "Something went wrong..."
+          : clientError.message;
+
+      if (clientError.validation) {
+        clientError.internalCode = "BAD_REQUEST";
+        clientError.message = `A validation error occurred when validating the ${clientError.validationContext}...`;
+        clientError.details.validation = error.validation;
+
+        delete clientError.validationContext;
+        delete clientError.validation;
+      }
+
+      delete clientError.code;
+
+      // console.log(clientError);
+
+      return clientError;
+    },
+  );
+
+  // fastify.setErrorHandler(
+  //   (error: FastifyError, req: FastifyRequest, reply: FastifyReply) => {
+  //     console.log(error);
+
+  //     reply.send(error);
   //   },
-  // )
+  // );
+
+  // fastify.setErrorHandler(
+  //   (error: FastifyError, req: FastifyRequest, reply: FastifyReply) => {
+  //     const clientError: Partial<IClientHttpError> = { ...error };
+
+  //     clientError.internalCode = clientError.internalCode || "0000";
+  //     clientError.details = clientError.details || {};
+
+  //     clientError.message =
+  //       reply.statusCode === 500
+  //         ? "Something went wrong..."
+  //         : clientError.message;
+
+  //     if (clientError.validation) {
+  //       clientError.internalCode = "BAD_REQUEST";
+  //       clientError.message = `A validation error occurred when validating the ${clientError.validationContext}...`;
+  //       clientError.details.validation = error.validation;
+
+  //       delete clientError.validationContext;
+  //       delete clientError.validation;
+  //     }
+
+  //     delete clientError.code;
+
+  //     // console.log(clientError);
+
+  //     reply
+  //       .status(clientError.statusCode || reply.statusCode)
+  //       .send(clientError);
+  //   },
+  // );
 }
 
 export default fp(commonHooks);

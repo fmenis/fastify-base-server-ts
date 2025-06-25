@@ -33,8 +33,6 @@ export const acceptedSchema = Type.Null({
   description: "Accepted.",
 });
 
-//##TODO complete the details part when work on error handling
-
 export const notFoundSchema = Type.Object(
   {
     statusCode: Type.Integer({
@@ -51,22 +49,12 @@ export const notFoundSchema = Type.Object(
     internalCode: Type.String({
       description: "Internal code.",
     }),
-    // details: Type.Object(
-    //   {
-    //     validation: Type.Optional(
-    //       Type.Array(
-    //         Type.Object({
-    //           message: Type.String({
-    //             description: "Validation message.",
-    //           }),
-    //         }),
-    //       ),
-    //     ),
-    //   },
-    //   {
-    //     additionalProperties: true,
-    //     description: "Error details (unstructured data).",
-    //   },
+    details: Type.Any(),
+    //##TODO understand if make sense
+    // stack: Nullable(
+    //   Type.String({
+    //     description: "Stack trace.",
+    //   }),
     // ),
   },
   {
@@ -92,23 +80,15 @@ export const badRequestSchema = Type.Object(
     internalCode: Type.String({
       description: "Internal code.",
     }),
-    // details: Type.Object(
-    //   {
-    //     validation: Type.Optional(
-    //       Type.Array(
-    //         Type.Object({
-    //           message: Type.String({
-    //             description: "Validation message.",
-    //           }),
-    //         }),
-    //       ),
-    //     ),
-    //   },
-    //   {
-    //     additionalProperties: true,
-    //     description: "Error details (unstructured data).",
-    //   },
-    // ),
+    details: Type.Object(
+      {
+        validation: Type.Any(),
+      },
+      {
+        additionalProperties: true,
+        description: "Error details (unstructured data).",
+      },
+    ),
   },
   {
     additionalProperties: false,
@@ -133,23 +113,7 @@ export const unauthorizedSchema = Type.Object(
     internalCode: Type.String({
       description: "Internal code.",
     }),
-    // details: Type.Object(
-    //   {
-    //     validation: Type.Optional(
-    //       Type.Array(
-    //         Type.Object({
-    //           message: Type.String({
-    //             description: "Validation message.",
-    //           }),
-    //         }),
-    //       ),
-    //     ),
-    //   },
-    //   {
-    //     additionalProperties: true,
-    //     description: "Error details (unstructured data).",
-    //   },
-    // ),
+    details: Type.Any(),
   },
   {
     additionalProperties: false,
@@ -174,23 +138,7 @@ export const forbiddenSchema = Type.Object(
     internalCode: Type.String({
       description: "Internal code.",
     }),
-    // details: Type.Object(
-    //   {
-    //     validation: Type.Optional(
-    //       Type.Array(
-    //         Type.Object({
-    //           message: Type.String({
-    //             description: "Validation message.",
-    //           }),
-    //         }),
-    //       ),
-    //     ),
-    //   },
-    //   {
-    //     additionalProperties: true,
-    //     description: "Error details (unstructured data).",
-    //   },
-    // ),
+    details: Type.Any(),
   },
   {
     additionalProperties: false,
@@ -215,23 +163,7 @@ export const conflictSchema = Type.Object(
     internalCode: Type.String({
       description: "Internal code.",
     }),
-    // details: Type.Object(
-    //   {
-    //     validation: Type.Optional(
-    //       Type.Array(
-    //         Type.Object({
-    //           message: Type.String({
-    //             description: "Validation message.",
-    //           }),
-    //         }),
-    //       ),
-    //     ),
-    //   },
-    //   {
-    //     additionalProperties: true,
-    //     description: "Error details (unstructured data).",
-    //   },
-    // ),
+    details: Type.Any(),
   },
   {
     additionalProperties: false,
